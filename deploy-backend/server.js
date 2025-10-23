@@ -10,15 +10,10 @@ const workerRoutes = require('./routes/worker.routes');
 const app = express();
 
 app.use(express.json());
-// Configure CORS to allow specific origins via ALLOWED_ORIGINS env var (comma separated).
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
 app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.length === 0) return callback(null, true);
-        if (allowedOrigins.includes(origin)) return callback(null, true);
-        return callback(new Error('Not allowed by CORS'));
-    }
+  origin: ['https://servicecustomer-app.netlify.app', 'https://servicecoordinator-app.netlify.app', 'https://serviceadmin-app.netlify.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  credentials: true
 }));
 
 const connectDB = async () => {

@@ -1,6 +1,6 @@
 const Request = require('../model/service.model');
 // ensure User model is registered in this service so populate() can find it
-const User = require('../model/User.model');
+const User = require('../models/User.model');
 
 const createRequest = async (req, res) => {
     try {
@@ -44,9 +44,11 @@ const createRequest = async (req, res) => {
 
 const getCustomerRequests = async (req, res) => {
     try {
+        console.log('getCustomerRequests called for user:', req.user && req.user.id);
         const requests = await Request.find({ customer: req.user.id })
             .sort({ createdAt: -1 })
             .populate('customer', 'fullName email');
+        console.log(`Found ${requests.length} requests for user ${req.user && req.user.id}`);
         // normalize customer display name for frontend convenience
         let transformed = requests.map(r => {
             const obj = (typeof r.toObject === 'function') ? r.toObject() : r;
@@ -83,7 +85,7 @@ const getCustomerRequests = async (req, res) => {
 
         res.status(200).json({ success: true, requests: transformed });
     } catch (error) {
-        console.error(error);
+        console.error('getCustomerRequests error for user', req.user && req.user.id, error && (error.stack || error.message || error));
         res.status(500).json({ success: false, message: 'Server error getting customer requests' });
     }
 };
