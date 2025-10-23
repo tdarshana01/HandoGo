@@ -1,0 +1,24 @@
+{
+    "name": "server-side",
+    "version": "1.0.0",
+    "description": "Root package for MERN Microservices platform.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+    "start:users": "npm run dev --prefix user-service",
+    "start:workers": "npm run dev --prefix worker-data-service",
+    "start:requests": "npm run dev --prefix request-service",
+
+    "dev": "concurrently \"npm run start:users\" \"npm run start:workers\" \"npm run start:requests\""
+    },
+    "keywords": [
+        "mern",
+        "microservices"
+    ],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
+}

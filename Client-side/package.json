@@ -1,0 +1,15 @@
+{
+  "name": "clien-side",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "scripts": {
+    "start": "npm run start:all",
+    "start:customer": "npm --prefix customer-app start",
+    "start:coordinator": "npm --prefix coordinator-app start",
+    "start:admin": "npm --prefix admin-app start",
+    "start:all": "concurrently \"npm --prefix customer-app start\" \"npm --prefix coordinator-app start\" \"npm --prefix admin-app start\""
+  }
+}
